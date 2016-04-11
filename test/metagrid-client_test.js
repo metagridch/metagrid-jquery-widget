@@ -1,7 +1,7 @@
 (function ($) {
     module('jQuery#metagridClient', {
         setup: function () {
-            this.elems = $('#qunit-fixture').children().metagridClient({projectSlug: 'dds'});
+            this.elems = $('#qunit-fixture').children('.success').metagridClient({projectSlug: 'dds'});
         }
     });
 
@@ -49,6 +49,15 @@
             assert.deepEqual(elem.metagridClient('getData'), mock, "Not the same data in mock and object");
             start();
         }, 1000);
+    });
+
+    QUnit.asyncTest('fail to load remote data', 1, function (assert) {
+        // expect(2); // we have one async test to run
+        var client = $('#qunit-fixture').children('.failure').metagridClient({projectSlug: 'dds'});
+        var test = setTimeout(function () {
+            assert.ok($('#qunit-fixture :not(.blue-box)'));
+            start();
+        }, 5000);
     });
 
 }(jQuery));
