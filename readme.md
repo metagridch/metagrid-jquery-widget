@@ -17,9 +17,12 @@ In your web page:
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $.awesome(); // "awesome"
+    $('#metagridWidget').metagridClient();
   });
 </script>
+
+<div data-element-kind="person" data-element-id="5" id="metagridWidget"></div>
+
 ```
 
 
