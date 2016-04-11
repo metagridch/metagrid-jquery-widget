@@ -73,8 +73,12 @@
                     if( typeof settings.entitySlugTransformer === 'function') {
                         entityKind = settings.entitySlugTransformer(entityKind);
                     }
+                    var success = false;
                     $.getJSON(settings.apiUrl + settings.projectSlug + separator + entityKind + separator +
                         entityId + '.json?lang=' + language + '&include=' + settings.includeDescription +'&jsoncallback=?', function (data) {
+                        // handle errors
+                        success = true;
+                        clearTimeout(timeout);
 
                         if (data[0]) {
                             // render template
@@ -91,17 +95,30 @@
                                     link.attr('title',  value.short_description);
                                 }
                                 link.appendTo(linksContainer)
-
                             });
                             $that.append(linksContainer);
                         }
-                    },
-                    function () {
-                        $.error("There was an error in the communication with the server.");
+                        else{
+                            console.log("metagrid-client: No concordance for the resource found");
+                        }
                     });
+
+                    /**
+                     * Check if after 5s the server doesn't answer and handle error
+                     * @type {number}
+                     */
+                    var timeout = setTimeout(function() {
+                        if (!success) {
+                            console.log("metagrid-client: No concordance for the resource found or a error in the communication with the server");
+                        }
+                    }, 5000);
                 }
             });
         },
+        /**
+         * get the server data associated with the object
+         * @returns {array|object}
+         */
         getData: function () {
             return $(this).data('data');
         }
