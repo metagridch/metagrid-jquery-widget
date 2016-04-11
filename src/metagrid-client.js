@@ -21,11 +21,27 @@
         init: function (options) {
 
             settings = $.extend({
+                /**
+                 * project slug f.e. dds
+                 */
                 projectSlug: '',
-                requestOnLoad: true,
+                /**
+                 * the api endpoint
+                 * **/
                 apiUrl: 'https://api.metagrid.ch/widget/',
+                /**
+                 * a flag tht decides how many data should pulled from the server
+                 */
                 includeDescription: false,
+                /**
+                 * A entity to slug transformer. Is needed if you have some unusual entitySlugs like p = person
+                 * @param slug
+                 * @returns {string}
+                 */
                 entitySlugTransformer: function (slug) {return slug;},
+                /**
+                 * A template that get rendered and in which the links will be displayed
+                 */
                 template: '<div class="row">' +
                             '<div class="span8">' +
                                 '<div class="blue-box">' +
@@ -66,12 +82,16 @@
                             $that.data('data', data[0]);
                             var linksContainer = $('<span />');
                             $.each(data[0], function (index, value) {
-                                $('<a>').attr({
+                                var link = $('<a>').attr({
                                     'class': 'metagrid-link',
                                     target: '_blank',
-                                    title: value.short_description,
                                     href: value.url
-                                }).text(index).appendTo(linksContainer);
+                                }).text(index);
+                                if(settings.includeDescription){
+                                    link.attr('title',  value.short_description);
+                                }
+                                link.appendTo(linksContainer)
+
                             });
                             $that.append(linksContainer);
                         }
