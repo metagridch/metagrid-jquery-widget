@@ -61,6 +61,7 @@
                  * A function that renders the data
                  * @param data
                  * @param template
+                 * @returns {jQuery}
                  */
                 render: function (data, template) {
                     var linksContainer = $('<span />');
@@ -89,14 +90,15 @@
             if($('#metagrid-links', settings.template).length <= 0){
                 $.error('The template needs to define an entry point with id #metagrid-links.');
                 return false;
+
             }
 
             return this.each(function () {
                 // Do something to each selected element.
                 var $that = $(this);
-                var entityKind = $that.attr("data-element-kind");
-                var entityId = $that.attr("data-element-id");
-                var language = $that.attr("data-language");
+                var entityKind = $that.data("element-kind");
+                var entityId = $that.data("element-id");
+                var language = $that.data("language");
                 // fallback to browser
                 if(language === null) {
                     language = $('html').attr('lang');
@@ -166,5 +168,4 @@
             $.error('Method ' + methodOrOptions + ' does not exist on jQuery.metagridclient');
         }
     };
-
 })(jQuery);
