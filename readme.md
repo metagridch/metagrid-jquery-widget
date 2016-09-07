@@ -29,6 +29,25 @@ The plugin needs the following basic configuration. With this the person with th
 
 ## Extended example
 
+Use the url to load data form metagrid. If you have an url like http://www.example.ch/person/11.html, load all corresponding data form metagrid
+
+```html
+<script src="jquery.js"></script>
+<script src="dist/metagrid-client.min.js"></script>
+<script>
+      jQuery(function ($) {
+        // check for numeric identifiers
+        var matches = window.location.href.match(/(\d+).html/);
+        if(matches !== null){
+            var id = matches[1];
+            // call the plugin indirectly
+            $('#metagridWidget').data({'element-kind':'person', 'element-id': id, 'language': 'de'}).metagridClient({
+                projectSlug:'histoirerurale'
+            });
+        }
+      });
+```
+
 In this example the plugins loads extended descriptions about the provider from the server. So you can display a description from the provider
 ```html
 <script src="jquery.js"></script>
