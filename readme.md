@@ -8,21 +8,8 @@
 Download the [production version][min] or the [development version][max].
 
 [min]: dist/jquery.metagrid-client.min.js
-[max]: dist/jquery.metagrid-client.js
+[max]: src/jquery.metagrid-client.js
 
-
-```html
-<script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
-<script>
-  jQuery(function ($) {
-    $('#metagridWidget').metagridClient(projectslug:'yourproject');
-  });
-</script>
-
-<div data-element-kind="person" data-element-id="5" id="metagridWidget"></div>
-
-```
 
 ## Basic example
 
@@ -32,7 +19,7 @@ The plugin needs the following basic configuration. With this the person with th
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient(projectslug:'yourproject');
+    $('#metagridWidget').metagridClient({projectslug:'yourproject'});
   });
 </script>
 
@@ -48,10 +35,10 @@ In this example the plugins loads extended descriptions about the provider from 
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient(
+    $('#metagridWidget').metagridClient({
     projectslug:'yourproject',
     includeDescription: true
-    );
+    });
   });
 </script>
 
@@ -65,9 +52,10 @@ In this example the plugin uses a custom template to render the links. A templat
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient(
-    projectslug:'yourproject',
-    template: $('<div><span>metagrid</span><span id="metagrid-links"></span></div>')
+    $('#metagridWidget').metagridClient({
+        projectslug:'yourproject',
+        template: $('<div><span>metagrid</span><span id="metagrid-links"></span></div>')
+    });
   });
 </script>
 
@@ -81,7 +69,7 @@ In this example the plugin uses a custom renderer to modify the generation of th
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient(
+    $('#metagridWidget').metagridClient({
     projectslug:'yourproject',
     render: function (data, template) {
                 var linksContainer = $('<span />');
@@ -99,6 +87,7 @@ In this example the plugin uses a custom renderer to modify the generation of th
                 $('#metagrid-links', template).append(linksContainer);
                 return template;
             }
+        });
   });
 </script>
 
@@ -112,12 +101,12 @@ In this example plugin uses a transformer to return the right resourcetype slug.
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient(
+    $('#metagridWidget').metagridClient({
     projectslug:'yourproject',
     entitySlugTransformer: function(slug) {
         if(slug === 'P') return 'person';
         if(slug === 'R') return 'organization';
-    );
+    });
   });
 </script>
 
