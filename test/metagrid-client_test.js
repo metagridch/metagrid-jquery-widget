@@ -2,6 +2,7 @@
     module('jQuery#metagridClient', {
         setup: function () {
             this.elems = $('#qunit-fixture').children('.success').metagridClient({projectSlug: 'dds'});
+
         }
     });
 
@@ -33,8 +34,20 @@
             assert.equal($('#qunit-fixture  span:first').text(), 'metagrid');
             start();
         }, 1000);
+
     });
 
+    QUnit.asyncTest('load indirectly', 2, function (assert) {
+        var bag =   $('<div/>');
+        bag.data({'element-kind': 'person', 'element-id':5}).metagridClient({projectSlug: 'dds'});
+        setTimeout(function () {
+            console.log(bag.html());
+            assert.ok(bag.find('#metagrid-links').length);
+            assert.equal(bag.find('.metagrid-link').length, 5);
+            start();
+        }, 1000);
+
+    });
     QUnit.asyncTest('remote data', 1, function (assert) {
         // expect(2); // we have one async test to run
         this.elems.metagridClient({
