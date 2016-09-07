@@ -10,6 +10,11 @@
      * Options for the plugin
      */
     var settings;
+    /**
+     * Define the console
+     * @type {Console}
+     */
+    var console = window.console;
 
     /**
      * Separator for urls
@@ -23,14 +28,16 @@
             settings = $.extend({
                 /**
                  * project slug f.e. dds
+                 * @type {string}
                  */
                 projectSlug: '',
                 /**
                  * the api endpoint
-                 * **/
+                 * @type {string}
+                 **/
                 apiUrl: 'https://api.metagrid.ch/widget/',
                 /**
-                 * a flag tht decides how many data should pulled from the server
+                 * a flag tht decides how much data should pulled from the server
                  */
                 includeDescription: false,
                 /**
@@ -40,21 +47,54 @@
                  */
                 entitySlugTransformer: function (slug) {return slug;},
                 /**
-                 * A template that get rendered and in which the links will be displayed
+                 * A flag to enter a debug mode
                  */
-                template: '<div class="row">' +
-                            '<div class="span8">' +
-                                '<div class="blue-box">' +
-                                    '<b>Links <a href="http://metagrid.ch" target="_blank">Metagrid.ch</a>:</b><span id="metagrid-links"></span>' +
+                debug: false,
+
+                /**
+                 * A template that get rendered and in which the links will be displayed. We need an entrypoint with id #metagrid-links
+                 * @type {jQuery}
+                 */
+                template: $('<div class="row">' +
+                                '<div class="span8">' +
+                                    '<div class="blue-box">' +
+                                        '<b>Links <a href="http://metagrid.ch" target="_blank">Metagrid.ch</a>:</b><span id="metagrid-links"></span>' +
+                                    '</div>' +
                                 '</div>' +
-                            '</div>' +
-                        '</div>'
+                            '</div>'),
+                /**
+                 * A function that renders the data
+                 * @param data
+                 * @param template
+                 */
+                render: function (data, template) {
+                    var linksContainer = $('<span />');
+                    $.each(data, function (index, value) {
+                        var link = $('<a>').attr({
+                            'class': 'metagrid-link',
+                            target: '_blank',
+                            href: value.url
+                        }).text(index);
+                        if(settings.includeDescription){
+                            link.attr('title',  value.short_description);
+                        }
+                        link.appendTo(linksContainer);
+                    });
+                    $('#metagrid-links', template).append(linksContainer);
+                    return template;
+                }
             }, options);
 
             // check for project slug
             if(settings.projectSlug === ''){
                 $.error('You need to declare a projectSlug for the MetagridClient ');
                 return false;
+            }
+
+            if($('#metagrid-links', settings.template).length <= 0){
+                $.error('The template needs to define an entry point with id #metagrid-links.');
+                return false;
+
             }
 
             return this.each(function () {
@@ -81,25 +121,19 @@
                         clearTimeout(timeout);
 
                         if (data[0]) {
-                            // render template
-                            $that.html(settings.template);
+                            if(settings.debug){
+                                console.log(data);
+                            }
                             $that.data('data', data[0]);
-                            var linksContainer = $('<span />');
-                            $.each(data[0], function (index, value) {
-                                var link = $('<a>').attr({
-                                    'class': 'metagrid-link',
-                                    target: '_blank',
-                                    href: value.url
-                                }).text(index);
-                                if(settings.includeDescription){
-                                    link.attr('title',  value.short_description);
-                                }
-                                link.appendTo(linksContainer)
-                            });
+
+                            // render template
+                            var linksContainer = settings.render(data[0], settings.template.clone());
                             $that.append(linksContainer);
                         }
                         else{
-                            console.log("metagrid-client: No concordance for the resource found");
+                            if(settings.debug) {
+                                console.log("metagrid-client: No concordance for the resource found");
+                            }
                         }
                     });
 
@@ -108,7 +142,7 @@
                      * @type {number}
                      */
                     var timeout = setTimeout(function() {
-                        if (!success) {
+                        if (!success && settings.debug) {
                             console.log("metagrid-client: No concordance for the resource found or a error in the communication with the server");
                         }
                     }, 5000);
