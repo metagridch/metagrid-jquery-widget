@@ -1,5 +1,5 @@
-/*! metagrid-client - v0.1.0 - 2016-09-07
-* Copyright (c) 2016 ; Licensed MIT */
+/*! metagrid-client - v0.1.0 - 2018-03-01
+* Copyright (c) 2018 ; Licensed MIT */
 (function ($) {
     /**
      * Options for the plugin
@@ -110,6 +110,8 @@
                         entityKind = settings.entitySlugTransformer(entityKind);
                     }
                     var success = false;
+                    var timeout = null;
+
                     $.getJSON(settings.apiUrl + settings.projectSlug + separator + entityKind + separator +
                         entityId + '.json?lang=' + language + '&include=' + settings.includeDescription +'&jsoncallback=?', function (data) {
                         // handle errors
@@ -137,7 +139,7 @@
                      * Check if after 5s the server doesn't answer and handle error
                      * @type {number}
                      */
-                    var timeout = setTimeout(function() {
+                    timeout = setTimeout(function() {
                         if (!success && settings.debug) {
                             console.log("metagrid-client: No concordance for the resource found or a error in the communication with the server");
                         }
