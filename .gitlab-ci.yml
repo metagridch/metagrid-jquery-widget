@@ -1,0 +1,20 @@
+image: node
+
+cache:
+  paths:
+  - nodes_modules/
+
+stages:
+  - test
+before_script:
+  - npm install
+
+qunit:
+  stage: test
+  script:
+    - npm test
+  only:
+    - master
+  artifacts:
+    paths:
+      - dist/
