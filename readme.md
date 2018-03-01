@@ -5,10 +5,7 @@
 
 ## Getting Started
 
-Download the [production version][min] or the [development version][max].
-
-[min]: dist/jquery.metagrid-client.min.js
-[max]: src/jquery.metagrid-client.js
+Download the [latest build](https://source.dodis.ch/metagrid/jquery-widget/-/jobs/artifacts/master/download?job=qunit) from the server.
 
 
 ## Basic example
