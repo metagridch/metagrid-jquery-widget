@@ -48,12 +48,6 @@ module.exports = function (grunt) {
       options: {
         reporter: require('jshint-stylish')
       },
-      gruntfile: {
-        options: {
-          jshintrc: '.jshintrc'
-        },
-        src: 'Gruntfile.js'
-      },
       src: {
         options: {
           jshintrc: 'src/.jshintrc'
