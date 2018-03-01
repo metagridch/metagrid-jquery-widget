@@ -1,0 +1,4 @@
+0.2
+- Add gilab-ci config
+- Update dependencies
+- Refactor tests for QUnit2
