@@ -15,7 +15,7 @@
             assert.equal($('#qunit-fixture .blue-box a').attr('href'), 'http://metagrid.ch');
             assert.equal($('#qunit-fixture .metagrid-link').length, 6);
             done();
-        }, 1000);
+        }, 5000);
     });
 
     QUnit.test('new template',  function (assert) {
