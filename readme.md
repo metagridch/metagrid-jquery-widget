@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/metagridch/metagrid-jquery-widget.svg?branch=master)](https://travis-ci.org/metagridch/metagrid-jquery-widget)
+
 This is a small jquery-client to use the metagrid API in a frontend.
 # Metagrid Client Features
 
