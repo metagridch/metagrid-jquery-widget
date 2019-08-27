@@ -1,5 +1,5 @@
-/*! metagrid-client - v0.1.0 - 2018-03-01
-* Copyright (c) 2018 ; Licensed MIT */
+/*! metagrid-client - v0.1.0 - 2019-08-27
+* Copyright (c) 2019 ; Licensed MIT */
 (function ($) {
     /**
      * Options for the plugin
@@ -85,12 +85,6 @@
             if(settings.projectSlug === ''){
                 $.error('You need to declare a projectSlug for the MetagridClient ');
                 return false;
-            }
-
-            if($('#metagrid-links', settings.template).length <= 0){
-                $.error('The template needs to define an entry point with id #metagrid-links.');
-                return false;
-
             }
 
             return this.each(function () {

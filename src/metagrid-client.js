@@ -90,12 +90,6 @@
                 return false;
             }
 
-            if($('#metagrid-links', settings.template).length <= 0){
-                $.error('The template needs to define an entry point with id #metagrid-links.');
-                return false;
-
-            }
-
             return this.each(function () {
                 // Do something to each selected element.
                 var $that = $(this);
