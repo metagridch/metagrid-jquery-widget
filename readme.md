@@ -168,4 +168,4 @@ In this example we use the widget several time on one page. The plugin uses the 
 __note:__ Because of backwards compatibility this is not the default behaviour
 
 ## Filter providers
-Often you just want to display selected providers and not all of them. This should be done in the metagrid backend. There you can select the providers you wish. Then the api will just deliver the selected providers. Please contact [us](https://www.metagrid.ch/ueber-uns/) to get an account
+Often you just want to display selected providers and not all of them. This should be done in the metagrid backend and not with javascript. In the backend you can select the providers you wish on your site. Then the api will just deliver the selected providers. Please contact [us](https://www.metagrid.ch/ueber-uns/) to get an account
