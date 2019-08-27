@@ -135,3 +135,34 @@ In this example the plugin uses a transformer to return the correct slug for the
 <div data-element-kind="p" data-element-id="5" id="metagridWidget"></div>
 
 ```
+In this example we use the widget several time on one page. The plugin uses the `#metarid-links` as a default placeholder for the links in the template. If you use the widget several time on the site this will cause issues. If you need several widget on one site you need to manage the placeholder in the `template` and the `render` option by yourself. Replace the default placeholder with a class.
+
+```html
+<script src="jquery.js"></script>
+<script src="dist/metagrid-client.min.js"></script>
+<script>
+  jQuery(function ($) {
+    $('#metagridWidget').metagridClient({
+        projectSlug:'yourproject',
+        render: function (data, template) {
+                var linksContainer = $('<span />');
+                $.each(data, function (index, value) {
+                    var link = $('<a>').attr({
+                        'class': 'see-also-link',
+                        href: value.url
+                    }).text(index);
+                    if(settings.includeDescription){
+                        link.attr('title',  value.short_description);
+                    }
+                    link.appendTo(linksContainer);
+                });
+                // you always should use this entrypoint for the widget
+                $('.metagrid-links', template).append(linksContainer);
+                return template;
+            },
+        template: $('<div><span>metagrid</span><span class="metagrid-links"></span></div>')
+
+        });
+  });
+```
+__note:__ Because of backwards compatibility this is not the default behaviour
