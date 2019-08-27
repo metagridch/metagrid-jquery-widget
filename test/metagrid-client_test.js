@@ -1,5 +1,5 @@
 (function ($) {
-    var timeout = 500;
+    var timeout = 1000;
     QUnit.module('jQuery#metagridClient', {
         beforeEach: function () {
             this.elems = $('#qunit-fixture').children('.success').metagridClient({projectSlug: 'dodis'});
