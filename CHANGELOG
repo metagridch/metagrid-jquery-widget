@@ -2,3 +2,9 @@
 - Add gilab-ci config
 - Update dependencies
 - Refactor tests for QUnit2
+0.3
+- Workaround for several widget on one page (#5)
+- Update the readme with additional information about selecting providers and use of the widget
+- Update dependencies
+- Update tests
+- Add an example for asynchronous add of a widget
