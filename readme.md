@@ -20,7 +20,7 @@ Include the Javascript into your html markup. The plugin needs the following bas
 <script src="dist/metagrid-client.min.js"></script>
 <script>
   jQuery(function ($) {
-    $('#metagridWidget').metagridClient({projectslug:'yourproject'});
+    $('#metagridWidget').metagridClient({projectSlug:'yourproject'});
   });
 </script>
 
@@ -58,7 +58,7 @@ In this example the plugins loads extended descriptions about the provider from 
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
-    projectslug:'yourproject',
+    projectSlug:'yourproject',
     includeDescription: true
     });
   });
@@ -75,7 +75,7 @@ In this example the plugin uses a custom template to render the links. A templat
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
-        projectslug:'yourproject',
+        projectSlug:'yourproject',
         template: $('<div><span>metagrid</span><span id="metagrid-links"></span></div>')
     });
   });
@@ -92,7 +92,7 @@ In this example the plugin uses a custom renderer to modify the generation of th
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
-    projectslug:'yourproject',
+    projectSlug:'yourproject',
     render: function (data, template) {
                 var linksContainer = $('<span />');
                 $.each(data, function (index, value) {
@@ -124,7 +124,7 @@ In this example the plugin uses a transformer to return the correct slug for the
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
-    projectslug:'yourproject',
+    projectSlug:'yourproject',
     entitySlugTransformer: function(slug) {
         if(slug === 'P') return 'person';
         if(slug === 'R') return 'organization';
