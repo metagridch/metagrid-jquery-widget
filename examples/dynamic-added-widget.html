@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Metagrid Ajax Example</title>
+    <!-- Load local jQuery. -->
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../src/metagrid-client.js"></script>
+    <!-- Removing access to jQuery and $. But it'll still be available as _$, if
+         you REALLY want to mess around with jQuery in the console. REMEMBER WE
+         ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
+    <script>
+      (function(jQuery){
+        jQuery(document).ready( function($) {
+            /**
+             * Metagid object
+             */
+            var Metagrid = {};
+
+            /**
+             * Init metagrid for dynamic added elements
+             * @param context
+             * @param lang
+             */
+            Metagrid.init = function(context, lang) {
+              // append language. If possible do this directly in the markup
+              $('.mg-widget', context).attr('data-language', lang);
+              $('.mg-widget', context).metagridClient({
+                // slug from the fotostictung
+                projectSlug: 'fotostiftung',
+                // add description
+                includeDescription: true,
+                // define a template with an entry point. In this case .metagrid-links
+                template: $('<div class="row">' +
+                  '<b>Links <a href="http://metagrid.ch" target="_blank">Metagrid.ch</a>:</b><span class="metagrid-links"></span>' +
+                  '</div>'),
+                // define a custom renderer
+                render: function (data, template) {
+                  var weblinksTitle = $('<div />', {class: 'weblinks-title'});
+                  weblinksTitle.html("Weblinks");
+                  var poweredBy = $('<div />', {class: 'poweredby-title'});
+                  poweredBy.html("powered by Metagrid");
+
+                  var linksContainer = $('<ul />');
+
+                  $.each(data, function (index, value) {
+                    var linkWrapper = $('<li />');
+                    var link = $('<a>').attr({
+                      'class': 'metagrid-link',
+                      href: value.url
+                    }).text(index);
+
+                    link.attr('title', value.short_description);
+                    link.attr('target', '_blank');
+                    linkWrapper.appendTo(linksContainer);
+                    link.appendTo(linkWrapper);
+                  });
+                  // reuse your entrypoint
+                  $('.metagrid-links', template).append([weblinksTitle, poweredBy, linksContainer]);
+                  return template;
+                }
+              });
+            };
+
+          /**
+           * Dummy ids for fotostiftung
+           * @type {number[]}
+           */
+            Metagrid.ids = [1227, 1233, 464];
+
+          /**
+           * Add dummy data into container and asynchronously call metagrid in the context
+           */
+          Metagrid.addDummyData = function () {
+              // select a random number
+              var rand = Math.round(Math.random() * (Metagrid.ids.length - 1));
+              // prepare template
+              var template = $('<div class="widget">' +
+                '<div class="mg-widget" data-element-id="' + Metagrid.ids[rand] + '" data-element-kind="person"></div>' +
+                '</div>');
+              // simulate request
+              setTimeout(function() {
+                $(".container").append(template);
+                // init metagrid for dynamic added elements
+                Metagrid.init(template, 'de');
+              }, 300);
+            };
+
+            // trigger button
+            $("#add").on('click', function() {
+              Metagrid.addDummyData();
+            });
+        })
+      })(jQuery)
+    </script>
+</head>
+<body>
+<h1>Dynamic added widget</h1>
+<p>In this example we asynchronous add the widget to the markup. This maybe the case if you load the widget in a snipped over an ajax request.</p>
+<button id="add">Add new widget</button>
+<div class="container"></div>
+</body>
+</html>
