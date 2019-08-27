@@ -1,4 +1,0 @@
-[
-    "$('body').html('test');",
-    "$('body').html('test');"
-]
