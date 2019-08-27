@@ -78,7 +78,7 @@ module.exports = function (grunt) {
     connect: {
       server: {
         options: {
-          hostname: '*',
+          hostname: '127.0.0.1',
           port: 9000
         }
       }
@@ -92,5 +92,6 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
+  grunt.registerTask('build', ['clean', 'concat', 'uglify']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
 };
