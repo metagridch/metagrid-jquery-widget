@@ -4,7 +4,7 @@
 
     QUnit.module('jQuery#metagridClient', {
         beforeEach: function () {
-            this.elems = $('#qunit-fixture').children('.success').metagridClient({projectSlug: 'dodis'});
+            this.elems = $('#qunit-fixture').children('.success');
         }
     });
 
@@ -14,6 +14,7 @@
 
     QUnit.test('async call', function (assert) {
         var done = assert.async();
+        this.elems.metagridClient({projectSlug: 'dodis'});
         setTimeout(function () {
             assert.equal($('#qunit-fixture .blue-box a').attr('href'), 'http://metagrid.ch');
             assert.equal($('#qunit-fixture .metagrid-link').length, petitpierreCount);
@@ -23,7 +24,6 @@
 
     QUnit.test('without include',  function (assert) {
         var done = assert.async();
-        console.log($('#qunit-fixture  .metagrid-link'));
 
         this.elems.metagridClient({
             projectSlug: 'dodis',
@@ -32,7 +32,6 @@
 
         setTimeout(function () {
             assert.ok($('#qunit-fixture :not(.blue-box)'));
-            console.log($('#qunit-fixture  .metagrid-link'));
             assert.equal($('#qunit-fixture  .metagrid-link').length, petitpierreCount);
             assert.equal($('#qunit-fixture  .metagrid-link:first').attr('href'), 'https://hls-dhs-dss.ch/de/articles/004647/');
             done();

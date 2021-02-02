@@ -68,7 +68,6 @@
                  */
                 render: function (data, template) {
                     var linksContainer = $('<span />');
-                    console.log(data);
                     $.each(data, function (index, value) {
                         // check for the right url value
                         var url;
