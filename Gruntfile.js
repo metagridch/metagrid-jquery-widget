@@ -40,7 +40,7 @@ module.exports = function (grunt) {
     qunit: {
       all: {
         options: {
-          urls: ['http://localhost:9000/test/<%= pkg.name %>.html']
+          urls: ['http://localhost:9090/test/<%= pkg.name %>.html']
         }
       }
     },
@@ -79,7 +79,7 @@ module.exports = function (grunt) {
       server: {
         options: {
           hostname: '127.0.0.1',
-          port: 9000
+          port: 9090
         }
       }
     }

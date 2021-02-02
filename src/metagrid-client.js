@@ -69,10 +69,18 @@
                 render: function (data, template) {
                     var linksContainer = $('<span />');
                     $.each(data, function (index, value) {
+                        // check for the right url value
+                        var url;
+                        if(typeof data === "object" && data.url) {
+                            url = data.url;
+                        } else {
+                            url = value;
+                        }
+
                         var link = $('<a>').attr({
                             'class': 'metagrid-link',
                             target: '_blank',
-                            href: value.url
+                            href: url
                         }).text(index);
                         if(settings.includeDescription){
                             link.attr('title',  value.short_description);
@@ -97,8 +105,8 @@
                 var entityId = $that.data("element-id");
                 var language = $that.data("language");
                 // fallback to browser
-                if(language === null) {
-                    language = $('html').attr('lang');
+                if(language === null || typeof language === "undefined") {
+                    language = $('html').attr('lang') || 'de';
                 }
 
                 // exclude this
