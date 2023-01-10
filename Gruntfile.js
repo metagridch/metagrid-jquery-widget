@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+      '* Copyright (c) <%= grunt.template.today("yyyy") %>;' +
       ' Licensed MIT */\n',
     // Task configuration.
     clean: {
@@ -24,8 +24,8 @@ module.exports = function (grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['src/<%= pkg.name %>.js'],
-        dest: 'dist/jquery.<%= pkg.name %>.js'
+        src: ['src/metagrid-client.js'],
+        dest: 'dist/jquery.metagrid-widget.js'
       }
     },
     uglify: {
@@ -34,13 +34,13 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/jquery.<%= pkg.name %>.min.js'
+        dest: 'dist/jquery.metagrid-widget.min.js'
       }
     },
     qunit: {
       all: {
         options: {
-          urls: ['http://localhost:9090/test/<%= pkg.name %>.html']
+          urls: ['http://localhost:9090/test/metagrid-widget.html']
         }
       }
     },

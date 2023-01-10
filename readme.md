@@ -12,12 +12,17 @@ This is a small jquery-client to use the metagrid API in a frontend.
 
 Download the [latest build](https://source.dodis.ch/metagrid/jquery-widget/-/jobs/artifacts/master/download?job=qunit) from the server.
 
+If you wanna to use it with a build process as an es-modul, you can install it over npm. An example how to use the jquery plugin along with vite you can find in the examples. If you already use vite you may want to switch to the [modern-metagrid-widget](https://github.com/metagridch/modern-metagrid-widget)
+
+```bash
+npm install @metagrid/jquery-metagrid-widget
+```
 
 ## Basic example
 Include the Javascript into your html markup. The plugin needs the following basic configuration. With this declaration the person with the id 5 is loaded from the server and the div is replaced with the widget
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({projectSlug:'yourproject'});
@@ -34,7 +39,7 @@ Use the current url to load data form metagrid. If you have an person with id 11
 
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
       jQuery(function ($) {
         // check for numeric identifiers
@@ -54,7 +59,7 @@ Use the current url to load data form metagrid. If you have an person with id 11
 In this example the plugins loads extended descriptions about the provider from the server. So you can display a provider description for each link.
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
@@ -71,7 +76,7 @@ In this example the plugins loads extended descriptions about the provider from 
 In this example the plugin uses a custom template to render the links. A template always needs an html-element with the id #metagrid-links to place the links
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
@@ -88,7 +93,7 @@ In this example the plugin uses a custom template to render the links. A templat
 In this example the plugin uses a custom renderer to modify the generation of the links. You should append the links to the html-element with id #metagrid-links
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
@@ -120,7 +125,7 @@ In this example the plugin uses a custom renderer to modify the generation of th
 In this example the plugin uses a transformer to return the correct slug for the resource type. This is useful if you automatically use the url to trigger the widget.
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({
@@ -139,7 +144,7 @@ In this example we use the widget several time on one page. The plugin uses the 
 
 ```html
 <script src="jquery.js"></script>
-<script src="dist/metagrid-client.min.js"></script>
+<script src="dist/jquery.metagrid-widget.min.js"></script>
 <script>
   jQuery(function ($) {
     $('#metagridWidget').metagridClient({

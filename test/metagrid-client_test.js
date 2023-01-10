@@ -1,6 +1,6 @@
 (function ($) {
     var timeout = 1000;
-    var petitpierreCount = 9;
+    var petitpierreCount = 10;
 
     QUnit.module('jQuery#metagridClient', {
         beforeEach: function () {
@@ -33,7 +33,7 @@
         setTimeout(function () {
             assert.ok($('#qunit-fixture :not(.blue-box)'));
             assert.equal($('#qunit-fixture  .metagrid-link').length, petitpierreCount);
-            assert.equal($('#qunit-fixture  .metagrid-link:first').attr('href'), 'https://hls-dhs-dss.ch/de/articles/004647/');
+            assert.equal($('#qunit-fixture  .metagrid-link:first').attr('href'), 'https://hls-dhs-dss.ch/de/articles/004647/2014-04-22/');
             done();
         }, timeout);
 
@@ -77,7 +77,7 @@
         var elem = this.elems;
         setTimeout(function () {
             //
-            var mock = JSON.parse('{"HLS":{"url":"https://hls-dhs-dss.ch/de/articles/004647/","short_description":"Historisches Lexikon der Schweiz","long_description":"Historisches Lexikon der Schweiz"},"Lonsea":{"url":"http://www.lonsea.de/pub/person/13800","short_description":"Lonsea","long_description":"League of Nations Search Engine"},"GND":{"url":"http://d-nb.info/gnd/124769942","short_description":"Gemeinsame Normdatei (GND)","long_description":"Gemeinsame Normdatei (GND)"},"Elites suisses":{"url":"https://www2.unil.ch/elitessuisses/index.php?page=detailPerso\u0026idIdentite=50020","short_description":"Schweizerische Eliten im 20. Jahrhundert","long_description":"Schweizerische Eliten im 20. Jahrhundert"},"Helveticat":{"url":"https://www.helveticat.ch/discovery/search?query=lds50,contains,124769942\u0026vid=41SNL_51_INST:helveticat","short_description":"Helveticat","long_description":"Helveticat"},"VIAF":{"url":"http://viaf.org/viaf/69869999","short_description":"Virtual International Authority File (VIAF)","long_description":"Virtual International Authority File (VIAF)"},"Huygens":{"url":"http://resources.huygens.knaw.nl/europeseintegratie/en/persoon/5148","short_description":"Huygens ING","long_description":"Huygens ING"},"BSG":{"url":"https://www.bsg.nb.admin.ch/discovery/search?query=lds50,contains,124769942\u0026vid=41SNL_54_INST:bsg","short_description":"BSG","long_description":"Bibliographie der Schweizergeschichte"},"parl.ch":{"url":"https://www.parlament.ch/de/biografie?CouncillorId=2914","short_description":"Members of the Swiss parliament","long_description":"Members of the Swiss National Council and the Council of States since 1848"}}');
+            var mock = JSON.parse('{"HLS":{"url":"https://hls-dhs-dss.ch/de/articles/004647/2014-04-22/","short_description":"Historisches Lexikon der Schweiz","long_description":"Historisches Lexikon der Schweiz"},"Lonsea":{"url":"http://www.lonsea.de/pub/person/13800","short_description":"Lonsea","long_description":"League of Nations Search Engine"},"GND":{"url":"https://d-nb.info/gnd/124769942","short_description":"Gemeinsame Normdatei (GND)","long_description":"Gemeinsame Normdatei (GND)"},"Elites suisses":{"url":"https://www2.unil.ch/elitessuisses/index.php?page=detailPerso\u0026idIdentite=50020","short_description":"Schweizerische Eliten im 20. Jahrhundert","long_description":"Schweizerische Eliten im 20. Jahrhundert"},"Helveticat":{"url":"https://www.helveticat.ch/discovery/search?query=lds50,contains,124769942\u0026vid=41SNL_51_INST:helveticat","short_description":"Helveticat","long_description":"Helveticat"},"VIAF":{"url":"http://viaf.org/viaf/115004429","short_description":"Virtual International Authority File (VIAF)","long_description":"Virtual International Authority File (VIAF)"},"Huygens":{"url":"http://resources.huygens.knaw.nl/europeseintegratie/en/persoon/5148","short_description":"Huygens ING","long_description":"Huygens ING"},"BSG":{"url":"https://www.bsg.nb.admin.ch/discovery/search?query=lds50,contains,124769942\u0026vid=41SNL_54_INST:bsg","short_description":"BSG","long_description":"Bibliographie der Schweizergeschichte"},"ETH-Bibliothek":{"url":"https://eth.swisscovery.slsp.ch/discovery/search?vid=41SLSP_ETH:ETH\u0026tab=discovery_network\u0026query=any,contains,[wd/person]124769942","short_description":" ETH-Bibliothek @ swisscovery ","long_description":" ETH-Bibliothek @ swisscovery "},"parl.ch":{"url":"https://www.parlament.ch/de/biografie?CouncillorId=2914","short_description":"Members of the Swiss parliament","long_description":"Members of the Swiss National Council and the Council of States since 1848"}}');
             assert.deepEqual(elem.metagridClient('getData'), mock, "Not the same data in mock and object");
             done();
         }, timeout);

@@ -8,3 +8,10 @@
 - Update dependencies
 - Update tests
 - Add an example for asynchronous add of a widget
+0.4
+- Fix problem in render function
+0.5
+- Use json with cors instead of jsonp
+- Publish on npm
+0.5.1
+- fix some npm issues

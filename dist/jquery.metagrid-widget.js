@@ -1,5 +1,6 @@
-/*! metagrid-client - v0.1.0 - 2021-02-02
-* Copyright (c) 2021 ; Licensed MIT */
+/*! @metagrid/jquery-metagrid-widget - v0.5.0 - 2023-01-10
+* https://metagrid.ch
+* Copyright (c) 2023; Licensed MIT */
 (function ($) {
     /**
      * Options for the plugin
@@ -111,15 +112,9 @@
                     if( typeof settings.entitySlugTransformer === 'function') {
                         entityKind = settings.entitySlugTransformer(entityKind);
                     }
-                    var success = false;
-                    var timeout = null;
 
                     $.getJSON(settings.apiUrl + settings.projectSlug + separator + entityKind + separator +
-                        entityId + '.json?lang=' + language + '&include=' + settings.includeDescription +'&jsoncallback=?', function (data) {
-                        // handle errors
-                        success = true;
-                        clearTimeout(timeout);
-
+                        entityId + '.json?lang=' + language + '&include=' + settings.includeDescription, function (data) {
                         if (data[0]) {
                             if(settings.debug){
                                 console.log(data);
@@ -135,17 +130,11 @@
                                 console.log("metagrid-client: No concordance for the resource found");
                             }
                         }
-                    });
-
-                    /**
-                     * Check if after 5s the server doesn't answer and handle error
-                     * @type {number}
-                     */
-                    timeout = setTimeout(function() {
-                        if (!success && settings.debug) {
-                            console.log("metagrid-client: No concordance for the resource found or a error in the communication with the server");
+                    }, function(event, jqxhr) {
+                        if (jqxhr.status !== 404) {
+                            console.error("There was an error on metarid. The Server answered with "+jqxhr.status);
                         }
-                    }, 5000);
+                    });
                 }
             });
         },
