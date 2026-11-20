@@ -20,6 +20,22 @@
      */
     var separator = "/";
 
+    /**
+     * Screen reader hint for links that open a new tab, per language
+     */
+    var newTabHints = {
+        de: 'öffnet in neuem Tab',
+        fr: 's\'ouvre dans un nouvel onglet',
+        it: 'si apre in una nuova scheda',
+        en: 'opens in a new tab'
+    };
+
+    /**
+     * Inline so the plugin keeps working without a stylesheet
+     */
+    var visuallyHidden = 'position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;' +
+        'overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
+
     var methods = {
         init: function (options) {
 
@@ -67,25 +83,17 @@
                  * @returns {jQuery}
                  */
                 render: function (data, template) {
-                    var linksContainer = $('<span />');
+                    var linksContainer = $('<span role="list" />');
                     $.each(data, function (index, value) {
-                        // check for the right url value
-                        var url;
-                        if(typeof data === "object" && data.url) {
-                            url = data.url;
-                        } else {
-                            url = value;
-                        }
-
                         var link = $('<a>').attr({
                             'class': 'metagrid-link',
                             target: '_blank',
-                            href: url
+                            href: value.url || value
                         }).text(index);
                         if(settings.includeDescription){
                             link.attr('title',  value.short_description);
                         }
-                        link.appendTo(linksContainer);
+                        $('<span role="listitem" />').append(link, ' ').appendTo(linksContainer);
                     });
                     $('#metagrid-links', template).append(linksContainer);
                     return template;
@@ -125,6 +133,13 @@
 
                             // render template
                             var linksContainer = settings.render(data[0], settings.template.clone());
+                            // the descriptions come back in the requested language, which may differ from the page (WCAG 3.1.2)
+                            linksContainer.attr('lang', language);
+                            // tell screen reader users which links open a new tab (WCAG 3.2.5 / G201)
+                            linksContainer.find('a[target="_blank"]').append(
+                                $('<span />').attr('style', visuallyHidden)
+                                    .text(' (' + (newTabHints[String(language).slice(0, 2)] || newTabHints.en) + ')')
+                            );
                             $that.append(linksContainer);
                         }
                         else{

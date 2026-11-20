@@ -83,6 +83,19 @@
         }, timeout);
     });
 
+    QUnit.test('accessibility', function (assert) {
+        var done = assert.async();
+        this.elems.attr('data-language', 'de').metagridClient({projectSlug: 'dodis', includeDescription: true});
+        setTimeout(function () {
+            var fixture = $('#qunit-fixture');
+            assert.equal(fixture.find('[role=list] > [role=listitem] > .metagrid-link').length, petitpierreCount);
+            assert.equal(fixture.find('.metagrid-link:first').attr('href'), 'https://hls-dhs-dss.ch/de/articles/004647/2014-04-22/');
+            assert.ok(fixture.find('.metagrid-link:first').text().indexOf('(öffnet in neuem Tab)') > 0);
+            assert.equal(fixture.find('[lang=de]').length, 1);
+            done();
+        }, timeout);
+    });
+
     QUnit.test('fail to load remote data', function (assert) {
         var done = assert.async();
         $('#qunit-fixture').children('.failure').metagridClient({projectSlug: 'dodis'});

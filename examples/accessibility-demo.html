@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>Metagrid Accessibility Demo</title>
+    <!-- before: released build, on its own jQuery copy -->
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../dist/jquery.metagrid-widget.js"></script>
+    <script>window.jqBefore = jQuery.noConflict(true);</script>
+    <!-- after: current source -->
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../src/metagrid-client.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 16px; }
+        .cols { display: flex; flex-wrap: wrap; gap: 24px; }
+        .cols > section { flex: 1 1 400px; min-width: 0; }
+        pre { background: #f4f4f4; padding: 8px; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+        /* make the screen-reader-only text visible */
+        .reveal [style*="clip"] { position: static !important; width: auto !important; height: auto !important;
+            margin: 0 !important; overflow: visible !important; clip: auto !important; background: #ff0; }
+    </style>
+</head>
+<body>
+<h1>Metagrid widget: before / after</h1>
+<p>Page language is <code>de</code>, the widgets request <code>fr</code> with descriptions included.
+    Try it with VoiceOver (Cmd+F5) or Chrome DevTools &rarr; Elements &rarr; Accessibility.</p>
+<label><input type="checkbox" id="reveal"> Show screen-reader-only text</label>
+
+<div class="cols">
+    <section>
+        <h2>Before (dist, v0.5.0)</h2>
+        <div id="before" data-element-kind="person" data-element-id="5" data-language="fr"></div>
+        <pre></pre>
+    </section>
+    <section>
+        <h2>After (src)</h2>
+        <div id="after" data-element-kind="person" data-element-id="5" data-language="fr"></div>
+        <pre></pre>
+    </section>
+</div>
+
+<script>
+    function showMarkup(el) {
+        new MutationObserver(function () {
+            el.nextElementSibling.textContent = el.innerHTML.replace(/></g, '>\n<');
+        }).observe(el, {childList: true});
+    }
+    showMarkup(document.getElementById('before'));
+    showMarkup(document.getElementById('after'));
+
+    jqBefore('#before').metagridClient({projectSlug: 'dodis', includeDescription: true});
+    jQuery('#after').metagridClient({projectSlug: 'dodis', includeDescription: true});
+
+    document.getElementById('reveal').addEventListener('change', function () {
+        document.body.classList.toggle('reveal', this.checked);
+    });
+</script>
+</body>
+</html>
